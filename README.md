@@ -18,16 +18,7 @@ ESP32-C3 board with an L86 GNSS module, a single emergency push button, and coin
 | Inputs | Emergency button (SW3), BOOT (SW1), RESET (SW2) |
 | Indicators | Power LED (LED2), user LED (LED3), GNSS 1PPS LED (LED1) |
 
-## Design Highlight: Power Path
-
-The 3.3 V rail has two sources.
-
-1. Battery: the TPS61099 boosts the coin cell to 3.3 V (feedback divider R6/R5). Its enable pin is tied to VIN, so the rail is available whenever a cell is installed.
-2. USB: the TLV75733P regulates VBUS to 3.3 V (VCC_3V3). The LM66100 ideal diode connects VCC_3V3 to the system rail.
-
-The LM66100 replaces a Schottky OR-ing diode. It has a lower forward drop, so the USB-derived rail stays close to 3.3 V, and it blocks reverse current, so the boost converter cannot back-feed the LDO when USB is disconnected. The board runs from either source without a manual switch.
-
-## Additional Design Notes
+## Design Notes
 
 - Programming uses the ESP32-C3 native USB Serial/JTAG on GPIO18/GPIO19. No USB-to-UART bridge is required.
 - USB-C sink configuration uses 5.1 kΩ pull-downs on CC1 and CC2 (R3, R4). D+, D-, and VBUS have ESD protection (U2 to U4).
